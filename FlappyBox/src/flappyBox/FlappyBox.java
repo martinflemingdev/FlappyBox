@@ -71,7 +71,6 @@ public class FlappyBox implements ActionListener, MouseListener {
 	public void actionPerformed(ActionEvent e) {
 
 		speed = 10;
-
 		ticks++;
 
 		if (started) {
@@ -137,9 +136,7 @@ public class FlappyBox implements ActionListener, MouseListener {
 		}
 		// renders all colors 
 		renderer.repaint();
-
 	}
-
 
 	/**
 	 * @param start
@@ -165,14 +162,13 @@ public class FlappyBox implements ActionListener, MouseListener {
 		int columnWidth = 100;
 		int columnHeight = 50 + random.nextInt(300);
 
-
 		// adds a top and bottom part of column to create a "single" column with gap in between
 		// spreads out the columns in 300 pixel intervals, called 4 times in flappyBox class
 		if (start) {
 			columns.add(new Rectangle(GAME_WIDTH + columnWidth + columns.size() * 300, GAME_HEIGHT - columnHeight - 120, columnWidth, columnHeight));
 			columns.add(new Rectangle(GAME_WIDTH + columnWidth + (columns.size() -1 ) * 300, 0, columnWidth, GAME_HEIGHT - columnHeight - gap));
 		}
-		// looks at last 
+		// looks at last column and takes it's x position + 600 pixels, continues to create columns
 		else {
 			columns.add(new Rectangle(columns.get(columns.size() - 1).x + 600, GAME_HEIGHT - columnHeight - 120, columnWidth, columnHeight));
 			columns.add(new Rectangle(columns.get(columns.size() - 1).x , 0, columnWidth , GAME_HEIGHT - columnHeight - gap));
@@ -207,7 +203,7 @@ public class FlappyBox implements ActionListener, MouseListener {
 		g.setFont(new Font("Arial", 1, 100));
 
 		if (!started) {
-			// sets starting point at x=100 and y=800/2 (so centers) and - 50 to compensate for size
+		// sets starting point at x=100 and y=800/2 (so centers) and - 50 to compensate for size
 			g.drawString("Click to Start!", 75, (GAME_HEIGHT / 2) - (100/2)) ;
 		}
 
@@ -215,6 +211,7 @@ public class FlappyBox implements ActionListener, MouseListener {
 			g.drawString("GAME OVER!", 75 , GAME_HEIGHT/2 - 50);
 		}
 
+		// displays the score once the game starts
 		if (!gameOver && started) {
 			g.drawString((String.valueOf((int)score)), GAME_WIDTH / 2 -25 , 100);
 		}
@@ -250,10 +247,11 @@ public class FlappyBox implements ActionListener, MouseListener {
 			started = true;
 		} 
 		else if (!gameOver) {
+			// stops box from falling so it can jump instead of fighting descent and just falling less
 			if (yMotion > 0) {
 				yMotion = 0;
 			}
-			// goes up 10 when mouse pressed
+			// goes up 10 pixels when mouse pressed
 			yMotion -= 10;
 		}
 	}
@@ -280,5 +278,4 @@ public class FlappyBox implements ActionListener, MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
-
 }
